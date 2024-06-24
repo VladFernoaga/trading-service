@@ -19,8 +19,11 @@ import reactor.core.publisher.Mono;
 @RequestMapping("/api")
 public class TradingController {
 
-    @Autowired
-    private TradingService tradingService;
+    private final TradingService tradingService;
+
+    public TradingController(TradingService tradingService) {
+        this.tradingService = tradingService;
+    }
 
     @PostMapping("/add")
     public Mono<String> addData(@RequestBody TradingDataDto data) {

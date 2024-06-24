@@ -12,16 +12,16 @@ import java.util.ArrayDeque;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.locks.ReentrantLock;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.fernoaga.trading_service.config.InMemoryMapConfig;
 import com.fernoaga.trading_service.model.Stats;
@@ -29,6 +29,7 @@ import com.fernoaga.trading_service.repository.TradingDataRepository;
 
 import reactor.test.StepVerifier;
 
+@ExtendWith(MockitoExtension.class)
 public class TradingServiceTests {
 
     @Mock
@@ -45,7 +46,6 @@ public class TradingServiceTests {
 
     @BeforeEach
     public void setUp() {
-        MockitoAnnotations.openMocks(this);
         when(mapConfig.getHashMapSize()).thenReturn(100);
         tradingService = spy(new TradingService(tradingDataRepository, mapConfig));
         doReturn(mockLock).when(tradingService)
@@ -106,7 +106,7 @@ public class TradingServiceTests {
     }
 
     @Test
-    public void givenConcurrentAccess_whenAddData_thenSerializedByLock() throws InterruptedException, ExecutionException {
+    public void givenConcurrentAccess_whenAddData_thenSerializedByLock() {
         // Given
         String symbol = "AAPL";
         double value1 = 150.0;

@@ -42,7 +42,7 @@ public class TradingService {
      * <p>
      *
      * @param symbol the symbol representing the financial instrument (e.g., stock ticker).
-     * @param values the list of floating-point numbers representing the trading prices to be added.
+     * @param value the list of floating-point numbers representing the trading prices to be added.
      * @return a {@link Mono<Void>} that completes when the batch data addition is done.
      */
     public Mono<Void> addData(String symbol, double value) {
